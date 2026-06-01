@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Homepage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* 네비게이션 스타일 */
+        nav {
+            background: linear-gradient(135deg, rgb(197, 197, 197) 0%, rgb(89, 89, 89) 100%);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background: white;
+            color: #51686d;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 페이지 섹션 */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 홈 페이지 */
+        #home {
+            background: linear-gradient(180deg, rgb(165, 165, 165) 0%,rgb(255, 255, 255) 100%);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        #home h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #home p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-content {
+            background: white;
+            color: #333;
+            padding: 3rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        /* About 페이지 */
+        #about {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #about h2 {
+            color: #51686d;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #51686d;
+            padding-bottom: 0.5rem;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 3rem;
+            margin-top: 2rem;
+            align-items: flex-start;
+        }
+
+        .about-image {
+            flex-shrink: 0;
+            width: 250px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            flex: 1;
+        }
+
+        .about-card {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #51686d;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .about-card h3 {
+            color: #51686d;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact 페이지 */
+        #contact {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #contact h2 {
+            color: #51686d;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid #51686d;
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .info-item h3 {
+            color: #764ba2;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #51686d;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 227, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                justify-content: space-around;
+            }
+
+            nav a {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            #home h1 {
+                font-size: 2rem;
+            }
+
+            #home p {
+                font-size: 1rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .about-image {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            #about,
+            #contact {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            #home h1 {
+                font-size: 1.5rem;
+            }
+
+            .welcome-content {
+                padding: 1.5rem;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+        /* 푸터 스타일 */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav>
+        <ul>
+            <li><a href="#" class="nav-link active" data-page="home">홈</a></li>
+            <li><a href="#" class="nav-link" data-page="about">자기소개</a></li>
+            <li><a href="#" class="nav-link" data-page="contact">수강과목</a></li>
+        </ul>
+    </nav>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 홈 페이지 -->
+        <div id="home" class="page active">
+            <h1>안녕하세요.</h1>
+            <p>제 홈페이지에 오신 것을 환영합니다.</p>
+            <div class="welcome-content">
+                <h2>안내</h2>
+                <p></p>
+                <p>홈페이지 제작자의 인적사항에 대해 알고싶은 경우 자기소개 페이지로 이동하세요.</p>
+                <p>홈페이지 제작자의 수강과목에 대해 알고싶은 경우 수강과목 페이지로 이동하세요.</p>
+            </div>
+        </div>
+
+        <!-- 자기소개 페이지 -->
+        <div id="about" class="page">
+            <h2>자기소개</h2>
+            <p>저에 대해 더 알아보세요.</p>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="profile.jpg" alt="프로필 사진">
+                </div>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>기본 정보</h3>
+                        <p>이름: 손다은<br>학번: 202512001<br>소속: 컴퓨터공학과</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>컴퓨터공학과 진학이유</h3>
+                        <p>고등학생 시절 할 게임이 없어서 직접 만들고 싶다는 생각이 들었고, 게임개발자가 되기 위해서 컴퓨터공학과에 진학했습니다.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>좌우명</h3>
+                        <p>중간은 가자.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 수강과목 페이지 -->
+        <div id="contact" class="page">
+            <h2>수강과목</h2>
+            <p>현재 수강 중인 과목을 소개합니다.</p>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>웹프로그래밍</h3>
+                    <p>전공선택. 웹에 대한 이해를 기반으로 홈페이지 제작 능력 향상을 목표로하는 과목이다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>자료구조</h3>
+                    <p>전공필수. 데이터의 저장, 검색, 정렬 등을 다루는 프로그래밍 기초 과목이다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>선형대수학</h3>
+                    <p>전공선택. 선형대수의 기본 개념과 응용을 배우는 과목이다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>자료구조기초및활용</h3>
+                    <p>자유선택. 자료구조의 기본 개념과 실제 응용을 배우는 과목이다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>내삶과친밀성의시나리오</h3>
+                    <p>균형교양. 나 자신과 인관관계에 대해 배우는 과목이다.</p>
+                </div>
+                <div class="about-card">
+                    <h3>영상의이해</h3>
+                    <p>균형교양. 영화를 통해 영상 매체를 이해하는 과목이다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2026 My Homepage.</p>
+    </footer>
+
+    <script>
+        // 페이지 전환 로직
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // 모든 nav-link에서 active 클래스 제거
+                navLinks.forEach(l => l.classList.remove('active'));
+                // 클릭한 링크에 active 클래스 추가
+                link.classList.add('active');
+
+                // 모든 페이지 숨기기
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // 해당 페이지 표시
+                const pageId = link.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+
+                // 페이지 상단으로 스크롤
+                window.scrollTo(0, 0);
+            });
+        });
+    </script>
+</body>
+</html>
